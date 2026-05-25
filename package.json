@@ -1,0 +1,21 @@
+{
+  "name": "smart-ai-automation-complaint-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Smart AI Automation Complaint Platform — monorepo root",
+  "scripts": {
+    "dev": "concurrently -k -n server,client,ai-service -c blue,green,magenta \"npm run dev --prefix server\" \"npm run dev --prefix client\" \"npm run dev:ai\"",
+    "start": "concurrently -k -n server,client,ai-service -c blue,green,magenta \"npm run start --prefix server\" \"npm run start --prefix client\" \"npm run start:ai\"",
+    "build": "npm run build --prefix client",
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client && npm run setup:ai",
+    "setup:ai": "powershell -ExecutionPolicy Bypass -File scripts/setup-ai.ps1",
+    "kill-ports": "powershell -ExecutionPolicy Bypass -File scripts/kill-ports.ps1",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "dev:ai": "node scripts/run-ai.mjs",
+    "start:ai": "node scripts/run-ai.mjs --prod"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
