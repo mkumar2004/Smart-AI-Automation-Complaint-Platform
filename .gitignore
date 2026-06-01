@@ -10,5 +10,6 @@ smart-ai-service/data/
 smart-ai-service/__pycache__/
 scripts/*.log
 
+Project Ui/
 # Remove this legacy folder if it still exists after rename
 ai/
