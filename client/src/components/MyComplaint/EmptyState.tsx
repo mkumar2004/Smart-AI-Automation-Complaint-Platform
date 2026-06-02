@@ -27,7 +27,7 @@ export default function EmptyState({ onSubmit }: { onSubmit?: () => void }) {
 
       <h3 className="text-base font-semibold text-slate-700 mb-1.5">No complaints yet</h3>
       <p className="text-sm text-slate-400 mb-5 max-w-[200px] leading-relaxed">
-        You haven't submitted any complaints. Submit your first complaint to get started.
+        You haven&apos;t submitted any complaints. Submit your first complaint to get started.
       </p>
 
       <button

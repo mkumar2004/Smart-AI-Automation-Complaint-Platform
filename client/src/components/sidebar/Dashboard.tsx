@@ -67,7 +67,7 @@ function Dashboard({ onMenuClick }: DashboardProps) {
             <h1 className='text-xl font-bold text-slate-800 flex items-center gap-2'>
               Welcome back, Sarah! <span>👋</span>
             </h1>
-            <p className='text-sm text-slate-500 mt-0.5'>Here's what's happening with your complaints.</p>
+            <p className='text-sm text-slate-500 mt-0.5'>Here&apos;s what&apos;s happening with your complaints.</p>
           </div>
         </div>
         <button className="relative w-9 h-9 rounded-full border border-slate-200 bg-white flex items-center justify-center hover:bg-slate-50 transition-colors shadow-sm">
