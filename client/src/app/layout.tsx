@@ -12,10 +12,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={cn("font-sans overflow-x-hidden", geist.variable)}>
-     
-           <body className="overflow-x-hidden">{children}</body>
-     
+    <html lang="en" className={cn("font-sans overflow-x-hidden", geist.variable)} suppressHydrationWarning>
+      <body className="overflow-x-hidden">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

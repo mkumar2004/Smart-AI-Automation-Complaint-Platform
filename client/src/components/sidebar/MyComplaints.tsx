@@ -40,17 +40,17 @@ export default function MyComplaints() {
   const handleReset = () => { setSearch(""); setStatus(""); setCategory(""); setPage(1) }
 
   return (
-    <div className="p-6 bg-[#f4f6fb] h-full overflow-y-auto flex flex-col gap-5">
+    <div className="p-6 bg-transparent h-full overflow-y-auto flex flex-col gap-5">
 
       {/* Header */}
       <div className="flex items-start justify-between flex-shrink-0">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">My Complaints</h1>
-          <p className="text-slate-500 text-sm mt-1">View and track all your complaints in one place.</p>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">My Complaints</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">View and track all your complaints in one place.</p>
         </div>
-        <button className="relative p-2 rounded-full hover:bg-slate-100 bg-white border border-slate-200 shadow-sm">
-          <Bell size={20} className="text-slate-600" />
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white">3</span>
+        <button className="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <Bell size={20} className="text-slate-600 dark:text-slate-300" />
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900">3</span>
         </button>
       </div>
 
@@ -71,8 +71,8 @@ export default function MyComplaints() {
           {paginated.length > 0 ? (
             <ComplaintList complaints={paginated} />
           ) : (
-            <div className="bg-white rounded-xl border border-slate-200 p-10 flex items-center justify-center">
-              <p className="text-slate-400 text-sm">No complaints match your filters.</p>
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-10 flex items-center justify-center">
+              <p className="text-slate-400 dark:text-slate-500 text-sm">No complaints match your filters.</p>
             </div>
           )}
 
@@ -90,7 +90,7 @@ export default function MyComplaints() {
         </div>
 
         {/* Right — always visible empty state panel */}
-        <div className="w-72 flex-shrink-0 hidden lg:block bg-white rounded-xl border border-slate-200 shadow-sm">
+        <div className="w-72 flex-shrink-0 hidden lg:block bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <EmptyState onSubmit={() => console.log("go to new complaint")} />
         </div>
 

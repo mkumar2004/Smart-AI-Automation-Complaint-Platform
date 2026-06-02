@@ -35,12 +35,12 @@ const priorityDot: Record<Complaint["priority"], string> = {
 }
 
 const statusStyle: Record<Complaint["status"], string> = {
-  Pending:     "bg-gray-100    text-gray-600",
-  Processing:  "bg-orange-100  text-orange-600",
-  Assigned:    "bg-blue-100    text-blue-600",
-  "In Progress":"bg-purple-100 text-purple-600",
-  Resolved:    "bg-green-100   text-green-600",
-  Escalated:   "bg-red-100     text-red-600",
+  Pending:     "bg-gray-100    dark:bg-slate-800/80    text-gray-600    dark:text-slate-300",
+  Processing:  "bg-orange-100  dark:bg-orange-950/35  text-orange-600  dark:text-orange-400",
+  Assigned:    "bg-blue-100    dark:bg-blue-950/35    text-blue-600    dark:text-blue-400",
+  "In Progress":"bg-purple-100  dark:bg-purple-950/35  text-purple-600  dark:text-purple-400",
+  Resolved:    "bg-green-100   dark:bg-green-950/35   text-green-600   dark:text-green-400",
+  Escalated:   "bg-red-100     dark:bg-red-950/35     text-red-600     dark:text-red-400",
 }
 
 type Props = {
@@ -53,13 +53,13 @@ function RecentComplaints({ onViewAll }: Props) {
   const totalPages = Math.ceil(complaints.length / perPage)
   const paged = complaints.slice((page - 1) * perPage, page * perPage)
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden h-full flex flex-col">
+    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800/80 overflow-hidden h-full flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-slate-100 flex-shrink-0">
-        <h2 className="font-semibold text-slate-800 text-base">Recent Complaints</h2>
+      <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-slate-100 dark:border-slate-800/80 flex-shrink-0">
+        <h2 className="font-semibold text-slate-800 dark:text-slate-100 text-base">Recent Complaints</h2>
         <button
           onClick={onViewAll}
-          className="text-blue-600 text-sm hover:underline flex items-center gap-1 font-medium"
+          className="text-blue-600 dark:text-blue-400 text-sm hover:underline flex items-center gap-1 font-medium"
         >
           View All Complaints →
         </button>
@@ -68,34 +68,34 @@ function RecentComplaints({ onViewAll }: Props) {
       <div className="flex-1 min-h-0 overflow-y-auto overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="sticky top-0 z-10">
-            <tr className="bg-slate-50 border-b border-slate-100">
+            <tr className="bg-slate-50 dark:bg-slate-950/60 border-b border-slate-100 dark:border-slate-800/80">
               {["Ticket ID", "Title", "Category", "Priority", "Status", "Date", ""].map((h) => (
                 <th
                   key={h}
-                  className="px-2 md:px-3.5 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide whitespace-nowrap"
+                  className="px-2 md:px-3.5 py-2.5 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide whitespace-nowrap"
                 >
                   {h}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+          <tbody className="divide-y divide-slate-50 dark:divide-slate-800/30">
             {paged.map((c) => (
-              <tr key={c.id} className="hover:bg-slate-50 transition-colors">
+              <tr key={c.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                 {/* Ticket ID */}
-                <td className="px-2 md:px-3.5 py-2 font-medium text-blue-600 whitespace-nowrap">
+                <td className="px-2 md:px-3.5 py-2 font-medium text-blue-600 dark:text-blue-400 whitespace-nowrap">
                   {c.id}
                 </td>
 
                 {/* Title */}
-                <td className="px-2 md:px-3.5 py-2 text-slate-700">
+                <td className="px-2 md:px-3.5 py-2 text-slate-700 dark:text-slate-300">
                   <div className="truncate max-w-[100px] sm:max-w-[140px] xl:max-w-[170px]" title={c.title}>
                     {c.title}
                   </div>
                 </td>
 
                 {/* Category */}
-                <td className="px-2 md:px-3.5 py-2 text-slate-600 whitespace-nowrap">
+                <td className="px-2 md:px-3.5 py-2 text-slate-600 dark:text-slate-400 whitespace-nowrap">
                   {c.category}
                 </td>
 
@@ -103,7 +103,7 @@ function RecentComplaints({ onViewAll }: Props) {
                 <td className="px-2 md:px-3.5 py-2 whitespace-nowrap">
                   <div className="flex items-center gap-2">
                     <span className={`w-2 h-2 rounded-full ${priorityDot[c.priority]}`} />
-                    <span className="text-slate-700">{c.priority}</span>
+                    <span className="text-slate-700 dark:text-slate-300">{c.priority}</span>
                   </div>
                 </td>
 
@@ -115,13 +115,13 @@ function RecentComplaints({ onViewAll }: Props) {
                 </td>
 
                 {/* Date */}
-                <td className="px-2 md:px-3.5 py-2 text-slate-500 whitespace-nowrap">
+                <td className="px-2 md:px-3.5 py-2 text-slate-500 dark:text-slate-400 whitespace-nowrap">
                   {c.date}
                 </td>
 
                 {/* View button */}
                 <td className="px-2 md:px-3.5 py-2 whitespace-nowrap">
-                  <button className="px-4 py-1.5 text-xs font-medium text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                  <button className="px-4 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-850 hover:border-slate-300 dark:hover:border-slate-700 transition-colors">
                     View
                   </button>
                 </td>
@@ -132,11 +132,11 @@ function RecentComplaints({ onViewAll }: Props) {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 border-t border-slate-100 flex-shrink-0">
+      <div className="flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 border-t border-slate-100 dark:border-slate-800/80 flex-shrink-0">
         <button
           onClick={() => setPage((p) => Math.max(1, p - 1))}
           disabled={page === 1}
-          className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           ‹
         </button>
@@ -148,7 +148,7 @@ function RecentComplaints({ onViewAll }: Props) {
             className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-medium transition-colors
               ${page === p
                 ? "bg-blue-600 text-white border border-blue-600"
-                : "border border-slate-200 text-slate-600 hover:bg-slate-50"
+                : "border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-850"
               }`}
           >
             {p}
@@ -158,7 +158,7 @@ function RecentComplaints({ onViewAll }: Props) {
         <button
           onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
           disabled={page === totalPages}
-          className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           ›
         </button>

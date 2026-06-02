@@ -1,7 +1,8 @@
 "use client"
 
 import { LayoutDashboard, ClipboardList, PlusSquare, User, LogOut, Moon, Sun } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useTheme } from "next-themes"
 
 const navItems = [
   { title: "Dashboard",     icon: LayoutDashboard, key: "dashboard" },
@@ -18,7 +19,14 @@ type Props = {
 }
 
 export function AppSidebar({ active, onSelect, isOpen, onClose }: Props) {
-  const [lightMode, setLightMode] = useState(false)
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isLight = mounted ? theme === "light" : false
 
   return (
     <>
@@ -95,19 +103,19 @@ export function AppSidebar({ active, onSelect, isOpen, onClose }: Props) {
         {/* Light mode toggle */}
         <div className="flex items-center justify-between px-1">
           <div className="flex items-center gap-2 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-            <Moon size={15} />
-            <span>Light Mode</span>
+            {isLight ? <Sun size={15} /> : <Moon size={15} />}
+            <span>{isLight ? "Light Mode" : "Dark Mode"}</span>
           </div>
           <button
-            onClick={() => setLightMode(!lightMode)}
+            onClick={() => setTheme(isLight ? "dark" : "light")}
             className="w-11 h-6 rounded-full flex items-center px-0.5 transition-colors relative"
-            style={{ backgroundColor: lightMode ? "#2563eb" : "#334155" }}
+            style={{ backgroundColor: isLight ? "#2563eb" : "#334155" }}
           >
             <div
               className="w-5 h-5 rounded-full bg-white flex items-center justify-center transition-transform duration-200"
-              style={{ transform: lightMode ? "translateX(20px)" : "translateX(0px)" }}
+              style={{ transform: isLight ? "translateX(20px)" : "translateX(0px)" }}
             >
-              {lightMode
+              {isLight
                 ? <Sun size={11} style={{ color: "#f59e0b" }} />
                 : <Moon size={11} style={{ color: "#64748b" }} />}
             </div>

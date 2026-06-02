@@ -28,7 +28,7 @@ export default function CustomerPage() {
   }
 
   return (
-    <div className="flex h-screen w-full overflow-hidden" style={{ backgroundColor: "#f4f6fb" }}>
+    <div className="flex h-screen w-full overflow-hidden bg-[#f4f6fb] dark:bg-slate-950">
       <AppSidebar
         active={active}
         onSelect={(key) => {
