@@ -1,7 +1,7 @@
 "use client";
 import RegisterForm from "@/components/Auth/RegisterForm";
 import Image from "next/image";
-import RegisterLogo from "../../Assests/RegisterLogo.png";
+import RegisterLogo from "../../../Assests/RegisterLogo.png";
 
 export default function Register() {
   return (
