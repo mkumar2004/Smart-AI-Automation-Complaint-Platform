@@ -6,7 +6,11 @@ import AuditLog from '../models/AuditLog'
 import { complaintQueue } from '../queues/complaint.queue'
 import { AuthRequest } from '../middleware/auth'
 import { sendSuccess, sendError } from '../utils/apiResponse'
-
+import {
+  notifyComplaintRoom,
+  notifyUser,
+  notifyAgents,
+} from '../services/notification.service'
 // Validation schemas
 const createComplaintSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters').max(200),
@@ -222,6 +226,20 @@ export const updateComplaintStatus = async (
 
     await complaint.save()
 
+    // Notify everyone in complaint room
+    notifyComplaintRoom(req.params.id, 'complaint:status_changed', {
+      complaintId: req.params.id,
+      status,
+      updatedBy: req.user?.name,
+    })
+
+    // If escalated — notify admins
+    if (status === 'escalated') {
+      notifyAgents('complaint:escalated', {
+        complaintId: req.params.id,
+        message: 'A complaint has been escalated',
+      })
+    }
     // Audit log
     await AuditLog.create({
       action: 'status_updated',
@@ -334,6 +352,15 @@ export const addMessage = async (
     }
 
     await complaint.save()
+
+
+    // Notify everyone in complaint room about new message
+    notifyComplaintRoom(req.params.id, 'complaint:new_message', {
+      complaintId: req.params.id,
+      sender: req.user?.name,
+      senderRole: req.user?.role,
+      message,
+    })
 
     sendSuccess(res, { complaint }, 'Message sent successfully')
   } catch (error) {

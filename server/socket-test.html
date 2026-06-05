@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head><title>Socket Test</title></head>
+<body>
+  <div id="log"></div>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    // Replace with a real JWT token from your login endpoint
+    const token = 'YOUR_JWT_TOKEN_HERE'
+
+    const socket = io('http://localhost:5000', {
+      auth: { token }
+    })
+
+    socket.on('connected', (data) => {
+      log('✅ Connected: ' + JSON.stringify(data))
+    })
+
+    socket.on('complaint:status_changed', (data) => {
+      log('📋 Status changed: ' + JSON.stringify(data))
+    })
+
+    socket.on('complaint:new_message', (data) => {
+      log('💬 New message: ' + JSON.stringify(data))
+    })
+
+    // Join a complaint room
+    socket.emit('complaint:join', 'YOUR_COMPLAINT_ID_HERE')
+
+    function log(msg) {
+      document.getElementById('log').innerHTML += '<p>' + msg + '</p>'
+    }
+  </script>
+</body>
+</html>

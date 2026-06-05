@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express'
+import { createServer } from 'http'
 import cors from 'cors'
 import helmet from 'helmet'
 import { env } from './config/env'
@@ -6,17 +7,24 @@ import connectDB from './config/db'
 import authRoutes from './routes/auth.route'
 import complaintRoutes from './routes/complaint.route'
 import { initAIWorker } from './services/ai.services'
+import { initSocket } from './sockets'
+import { initNotificationService } from './services/notification.service'
 
 const app = express()
+const httpServer = createServer(app) // ← wrap express in http server
 
+// Security middleware
 app.use(helmet())
 app.use(cors({
   origin: env.CLIENT_URL,
   credentials: true,
 }))
+
+// Body parsing
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true }))
 
+// Health check
 app.get('/health', (_req, res) => {
   res.json({
     success: true,
@@ -44,12 +52,18 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   })
 })
 
+// Start server
 const startServer = async () => {
   await connectDB()
   initAIWorker()
 
-  app.listen(env.PORT, () => {
+  // Init Socket.io
+  const io = initSocket(httpServer)
+  initNotificationService(io)
+
+  httpServer.listen(env.PORT, () => {
     console.log(`🚀 Server running on http://localhost:${env.PORT}`)
+    console.log(`⚡ Socket.io ready on http://localhost:${env.PORT}`)
     console.log(`📋 Environment: ${env.NODE_ENV}`)
   })
 }

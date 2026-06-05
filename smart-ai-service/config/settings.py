@@ -1,22 +1,14 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
-
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding="utf-8",
-        extra="ignore",
-    )
+    GROQ_API_KEY: str
+    MODEL_NAME: str = "llama-3.1-8b-instant"
+    PORT: int = 8000
+    TEMPERATURE: float = 0.1
 
-    openai_api_key: str = ""
-    openai_model: str = "gpt-4o-mini"
-    embedding_model: str = "text-embedding-3-small"
-
-    ai_host: str = "0.0.0.0"
-    ai_port: int = 8000
-
-    chroma_persist_dir: str = "./data/chroma"
-    duplicate_similarity_threshold: float = 0.88
-
+    model_config = {
+        "env_file": ".env",
+        "extra": "ignore"
+    }
 
 settings = Settings()
